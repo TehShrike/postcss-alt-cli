@@ -28,19 +28,23 @@ async function build(cssProcessor, globPath, outputPath) {
 		})
 	}))
 
-	const rootOfAll = cssResults.map(result => result.root).reduce((memo, nextRoot) => memo.append(nextRoot))
+	if (cssResults.length === 0) {
+		await writeFile(outputPath, '')
+	} else {
+		const rootOfAll = cssResults.map(result => result.root).reduce((memo, nextRoot) => memo.append(nextRoot))
 
-	const result = rootOfAll.toResult({
-		to: outputFile,
-		map: {
-			inline: false,
-		},
-	})
+		const result = rootOfAll.toResult({
+			to: outputFile,
+			map: {
+				inline: false,
+			},
+		})
 
-	await Promise.all([
-		writeFile(outputPath, result),
-		writeFile(`${ outputPath }.map`, result.map),
-	])
+		await Promise.all([
+			writeFile(outputPath, result),
+			writeFile(`${ outputPath }.map`, result.map),
+		])
+	}
 
 	console.log(`Rebuilt.`, new Date())
 }
