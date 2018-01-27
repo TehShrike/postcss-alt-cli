@@ -1,6 +1,6 @@
 {
   "name": "postcss-alt-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Like postcss-cli, but concatenates a bunch of inputs into a single output",
   "bin": {
     "postcss-alt": "index.js"
