@@ -1,6 +1,5 @@
-const pify = require(`pify`)
 const path = require(`path`)
-const { readFile, writeFile } = pify(require(`fs`))
+const { readFile, writeFile } = require(`fs/promises`)
 const { sync: makeDirSync } = require(`make-dir`)
 
 const globby = require(`globby`)
@@ -41,8 +40,8 @@ async function build(cssProcessor, globPath, outputPath) {
 		})
 
 		await Promise.all([
-			writeFile(outputPath, result),
-			writeFile(`${ outputPath }.map`, result.map),
+			writeFile(outputPath, result.css),
+			writeFile(`${ outputPath }.map`, result.map.toString()),
 		])
 	}
 
