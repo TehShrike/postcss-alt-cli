@@ -78,6 +78,7 @@ function sortByDepth(fileA, fileB) {
 }
 
 async function onFileChange(globPath, fn) {
+	const pify = require(`pify`)
 	const gaze = pify(require(`gaze`))
 	const watcher = await gaze(globPath)
 
